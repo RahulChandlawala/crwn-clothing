@@ -49,7 +49,7 @@ class Directory extends React.Component {
 			<div className="directory-menu">
 				{this.state.sections.map(({ title, imageUrl, id, size }) => (
 					<MenuItem
-						title={title}
+						title={title.toUpperCase()}
 						number={id}
 						key={id}
 						imageUrl={imageUrl}
