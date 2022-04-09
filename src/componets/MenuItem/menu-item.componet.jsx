@@ -6,16 +6,16 @@ import { useNavigate } from "react-router-dom";
 import "./menu-iten.style.scss";
 
 // let Navigate = useNavigate();
-const MenuItem = ({ title, imageUrl, size }) => {
+const MenuItem = ({ title, imageUrl, size, linkUrl }) => {
 	const params = useParams();
 	const location = useLocation();
-	console.log(params, location);
+	// console.log(location.search, new URLSearchParams(location.search).get("id"));
 	let navigate = useNavigate();
 
 	return (
 		<div
 			role="button"
-			onClick={() => navigate("/hats")}
+			onClick={() => navigate(`${linkUrl}`)}
 			// style={{ backgroundImage: `url(${imageUrl})` }}
 			className={`menu-item ${size}`}
 		>
