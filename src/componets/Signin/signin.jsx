@@ -2,7 +2,7 @@ import React from "react";
 import CustomButton from "../custom-button/custom-button";
 import FormInput from "../form-input/form-input";
 import "./signin.scss";
-import { signInWithGoogle } from "../../firebase/firebase";
+import { NormalSignIn, signInWithGoogle } from "../../firebase/firebase";
 
 class SignIn extends React.Component {
 	constructor(props) {
@@ -12,10 +12,28 @@ class SignIn extends React.Component {
 			password: "",
 		};
 	}
-	handlesubmit = (e) => {
-		e.preventdefault();
-		this.setState({ email: "", password: "" });
+	handlesubmit = async (e) => {
+		e.preventDefault();
+
+		const { email, password } = this.state;
+		try {
+			const res = await NormalSignIn(email, password);
+			console.log(res);
+		} catch (err) {
+			switch (err.code) {
+				case "auth/wrong-password":
+					alert("Incorrect Password");
+					break;
+				case "auth/user-not-found":
+					alert("User not Fond");
+					break;
+				default:
+					console.log(err);
+			}
+		}
 	};
+	// this.setState({ email: "", password: "" });
+
 	handleChange = (e) => {
 		const { name, value } = e.target;
 		this.setState({ [name]: value });
@@ -47,11 +65,14 @@ class SignIn extends React.Component {
 					/>
 					<div className="button">
 						<CustomButton type="submit">SIGN IN</CustomButton>
-						<CustomButton onClick={signInWithGoogle} isGoogleSignIN>
+						<CustomButton
+							type="button"
+							onClick={signInWithGoogle}
+							isGoogleSignIN
+						>
 							Sign in With Google
 						</CustomButton>
 					</div>
-					{/* <input type="submit" value="Submit form" /> */}
 				</form>
 			</div>
 		);
