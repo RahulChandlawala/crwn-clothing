@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import CustomButton from "../custom-button/custom-button";
 import FormInput from "../form-input/form-input";
 import "./signin.scss";
 import { NormalSignIn, signInWithGoogle } from "../../firebase/firebase";
-import { UserContext } from "../../context/user";
 
 const defaultFormFields = {
 	email: "",
@@ -13,7 +12,6 @@ const defaultFormFields = {
 const SignIn = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields);
 	const { email, password } = formFields;
-	const { setcurrentUser } = useContext(UserContext);
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields);
@@ -24,7 +22,6 @@ const SignIn = () => {
 		try {
 			const { user } = await NormalSignIn(email, password);
 			resetFormFields();
-			setcurrentUser(user);
 		} catch (err) {
 			switch (err.code) {
 				case "auth/wrong-password":

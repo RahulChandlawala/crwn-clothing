@@ -10,17 +10,8 @@ import { signOut } from "firebase/auth";
 // import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 const Header = () => {
-	const { currentUser, setcurrentUser } = useContext(UserContext);
+	const { currentUser } = useContext(UserContext);
 
-	const SignOutHandler = async () => {
-		await SignOutUser();
-		setcurrentUser(null);
-	};
-
-	// const signOutHandler = async () => {
-	// 	await signOutUser();
-	// 	setcurrentUser(null);
-	// };
 	return (
 		<div className="header">
 			<Link to="/" className="logo-container">
@@ -34,7 +25,7 @@ const Header = () => {
 					CONTACT
 				</Link>
 				{currentUser ? (
-					<div className="option" onClick={SignOutHandler}>
+					<div className="option" onClick={SignOutUser}>
 						SIGN OUT{" "}
 					</div>
 				) : (

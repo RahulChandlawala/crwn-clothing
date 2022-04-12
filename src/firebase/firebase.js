@@ -7,6 +7,7 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	signOut,
+	onAuthStateChanged,
 } from "firebase/auth";
 import {
 	getFirestore,
@@ -40,11 +41,8 @@ export const createUsersProfileDocument = async (
 ) => {
 	if (!userAuth) return;
 	const userRef = doc(db, "users", userAuth.uid);
-	// console.log(userRef);
 
 	const snapshot = await getDoc(userRef);
-	// console.log(snapshot);
-	// console.log(snapshot.exists());
 
 	if (!snapshot.exists()) {
 		const { displayName, email } = userAuth;
@@ -66,7 +64,7 @@ export const createUsersProfileDocument = async (
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ promt: "select_account" });
-export const signInWithGoogle = () =>
+export const signInWithGoogle = async () =>
 	signInWithPopup(auth, provider).then((re) => {});
 
 export const createUser = async (email, password) => {
@@ -80,3 +78,6 @@ export const NormalSignIn = async (email, password) => {
 };
 
 export const SignOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+	onAuthStateChanged(auth, callback);
