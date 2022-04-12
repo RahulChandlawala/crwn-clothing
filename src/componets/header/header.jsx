@@ -7,10 +7,14 @@ import { UserContext } from "../../context/user";
 import { SignOutUser } from "../../firebase/firebase";
 import { async } from "@firebase/util";
 import { signOut } from "firebase/auth";
+import CartIcon from "../cart-icon/cart-icon";
+import CartDropDown from "../cart-dropdown/cart-dropdown";
+import { CartContext } from "../../context/cart";
 // import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 const Header = () => {
 	const { currentUser } = useContext(UserContext);
+	const { IsCartOpen } = useContext(CartContext);
 
 	return (
 		<div className="header">
@@ -33,7 +37,10 @@ const Header = () => {
 						SIGN IN
 					</Link>
 				)}
+
+				<CartIcon />
 			</div>
+			{IsCartOpen ? <CartDropDown /> : ""}
 		</div>
 	);
 };

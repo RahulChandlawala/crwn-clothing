@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
+import { CartProvider } from "./context/cart";
+import { ProductProvider } from "./context/product.context";
 import { UserProvider } from "./context/user";
 
 import "./index.css";
@@ -13,7 +15,11 @@ root.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<UserProvider>
-				<App />
+				<ProductProvider>
+					<CartProvider>
+						<App />
+					</CartProvider>
+				</ProductProvider>
 			</UserProvider>
 		</BrowserRouter>
 	</React.StrictMode>

@@ -1,32 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import CollationPreview from "../../componets/collection-preview/collection-preview";
-import SHOP_DATA from "./shop.data";
-class ShopPage extends React.Component {
-	constructor(props) {
-		super(props);
+import { ProductContext } from "../../context/product.context";
 
-		this.state = {
-			collections: SHOP_DATA,
-		};
-	}
+const ShopPage = () => {
+	const { Products } = useContext(ProductContext);
+	console.log(Products);
+	// console.log(collections);
 
-	render() {
-		const { collections } = this.state;
-		// console.log(collections);
-		return (
-			<div className="shop-page">
-				{collections.map(({ id, items, title, price, imageUrl }) => (
-					<CollationPreview
-						key={id}
-						items={items}
-						title={title}
-						price={price}
-						imageurl={imageUrl}
-					/>
-				))}
-			</div>
-		);
-	}
-}
+	return (
+		<div className="shop-page">
+			{Products.map(({ id, items, title, price, imageUrl }) => (
+				<CollationPreview
+					key={id}
+					items={items}
+					title={title}
+					price={price}
+					imageurl={imageUrl}
+				/>
+			))}
+		</div>
+	);
+};
 
 export default ShopPage;
