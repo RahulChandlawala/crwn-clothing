@@ -1,33 +1,50 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./header.scss";
+
 import { ReactComponent as Logo } from "../../assets/4.4 crown.svg.svg";
-import { auth } from "../../firebase/firebase";
+import { UserContext } from "../../context/user";
+import { SignOutUser } from "../../firebase/firebase";
+import { async } from "@firebase/util";
+import { signOut } from "firebase/auth";
+// import { signOutUser } from "../../utils/firebase/firebase.utils";
 
-const Header = ({ currentUser }) => (
-	<div className="header">
-		<Link to="/" className="logo-container">
-			<Logo className="logo" />
-		</Link>
-		<div className="options">
-			<Link className="option" to="/shop">
-				SHOP
-			</Link>
-			<Link className="option" to="/shop">
-				CONTACT
-			</Link>
+const Header = () => {
+	const { currentUser, setcurrentUser } = useContext(UserContext);
 
-			{currentUser ? (
-				<div className="option" onClick={() => auth.signOut()}>
-					SIGN OUT{" "}
-				</div>
-			) : (
-				<Link className="option" to="/signin">
-					SIGN IN
+	const SignOutHandler = async () => {
+		await SignOutUser();
+		setcurrentUser(null);
+	};
+
+	// const signOutHandler = async () => {
+	// 	await signOutUser();
+	// 	setcurrentUser(null);
+	// };
+	return (
+		<div className="header">
+			<Link to="/" className="logo-container">
+				<Logo className="logo" />
+			</Link>
+			<div className="options">
+				<Link className="option" to="/shop">
+					SHOP
 				</Link>
-			)}
+				<Link className="option" to="/shop">
+					CONTACT
+				</Link>
+				{currentUser ? (
+					<div className="option" onClick={SignOutHandler}>
+						SIGN OUT{" "}
+					</div>
+				) : (
+					<Link className="option" to="/signin">
+						SIGN IN
+					</Link>
+				)}
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export default Header;
