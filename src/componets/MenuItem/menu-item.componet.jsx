@@ -16,7 +16,6 @@ const MenuItem = ({ title, imageUrl, size, linkUrl }) => {
 		<div
 			role="button"
 			onClick={() => navigate(`${linkUrl}`)}
-			// style={{ backgroundImage: `url(${imageUrl})` }}
 			className={`menu-item ${size}`}
 		>
 			<div

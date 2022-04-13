@@ -5,8 +5,7 @@ import "./header.scss";
 import { ReactComponent as Logo } from "../../assets/4.4 crown.svg.svg";
 import { UserContext } from "../../context/user";
 import { SignOutUser } from "../../firebase/firebase";
-import { async } from "@firebase/util";
-import { signOut } from "firebase/auth";
+
 import CartIcon from "../cart-icon/cart-icon";
 import CartDropDown from "../cart-dropdown/cart-dropdown";
 import { CartContext } from "../../context/cart";
