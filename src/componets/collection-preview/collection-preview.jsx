@@ -2,7 +2,8 @@ import React from "react";
 import CollectionItem from "../collection-item/collection-item.jsx";
 import "./collection-preview.scss";
 
-const CollationPreview = ({ title, items }) => {
+const CollationPreview = ({ product }) => {
+	const { title, items } = product;
 	return (
 		<div className="collection-preview">
 			<h1 className="title">{title.toUpperCase()}</h1>

@@ -4,19 +4,11 @@ import { ProductContext } from "../../context/product.context";
 
 const ShopPage = () => {
 	const { Products } = useContext(ProductContext);
-	console.log(Products);
-	// console.log(collections);
 
 	return (
 		<div className="shop-page">
-			{Products.map(({ id, items, title, price, imageUrl }) => (
-				<CollationPreview
-					key={id}
-					items={items}
-					title={title}
-					price={price}
-					imageurl={imageUrl}
-				/>
+			{Products.map((product) => (
+				<CollationPreview key={product.id} product={product} />
 			))}
 		</div>
 	);
