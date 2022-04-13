@@ -1,16 +1,14 @@
-import React, { useContext } from "react";
-import CollationPreview from "../../componets/collection-preview/collection-preview";
-import { ProductContext } from "../../context/product.context";
+import { Route, Routes } from "react-router-dom";
+import Category from "../category/category";
 
+import CategoriesPreview from "../cotegories-preview/categories-preview";
+import "./shop.style.scss";
 const ShopPage = () => {
-	const { Products } = useContext(ProductContext);
-
 	return (
-		<div className="shop-page">
-			{Products.map((product) => (
-				<CollationPreview key={product.id} product={product} />
-			))}
-		</div>
+		<Routes>
+			<Route index element={<CategoriesPreview />} />
+			<Route path=":catagory" element={<Category />} />
+		</Routes>
 	);
 };
 

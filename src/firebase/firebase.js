@@ -1,4 +1,3 @@
-import { addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import {
 	getAuth,
@@ -12,14 +11,13 @@ import {
 import {
 	getFirestore,
 	collection,
-	query,
 	doc,
-	where,
 	getDoc,
 	setDoc,
+	writeBatch,
+	query,
+	getDocs,
 } from "firebase/firestore";
-import { async } from "@firebase/util";
-import { paste } from "@testing-library/user-event/dist/paste";
 
 const config = {
 	apiKey: "AIzaSyCAr_Vm3s8fdbl1jZyhULc0V0Kwsftd6cI",
@@ -34,6 +32,37 @@ const config = {
 export const app = initializeApp(config);
 export const db = getFirestore();
 export const auth = getAuth();
+
+export const addCollectionAndDocuments = async (
+	collectionKey,
+	objectsToAdd
+) => {
+	const collectionRef = collection(db, collectionKey);
+	const batch = writeBatch(db);
+
+	objectsToAdd.forEach((Object) => {
+		const docRef = doc(collectionRef, Object.title.toLowerCase());
+		batch.set(docRef, Object);
+	});
+
+	await batch.commit();
+	console.log("done");
+};
+
+export const getCatagoriesAndDocuments = async () => {
+	const collectionRef = collection(db, "catagoeirs");
+	const q = query(collectionRef);
+
+	const querySnapshop = await getDocs(q);
+	const catagoryMap = querySnapshop.docs.reduce((acc, docSnapshot) => {
+		const { title, items } = docSnapshot.data();
+
+		acc[title.toLowerCase()] = items;
+		return acc;
+	}, {});
+
+	return catagoryMap;
+};
 
 export const createUsersProfileDocument = async (
 	userAuth,

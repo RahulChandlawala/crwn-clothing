@@ -1,27 +1,29 @@
-import React from "react";
-import CollectionItem from "../collection-item/collection-item.jsx";
+import React, { useContext } from "react";
+import { CartContext } from "../../context/cart.jsx";
+import CustomButton from "../custom-button/custom-button";
 import "./collection-preview.scss";
 
-const CollationPreview = ({ product }) => {
-	const { title, items } = product;
+const ProductCard = ({ product }) => {
+	const { name, price, imageUrl } = product;
+	const { addItemToCart } = useContext(CartContext);
+
+	const addProductToCart = () => addItemToCart(product);
+
 	return (
-		<div className="collection-preview">
-			<h1 className="title">{title.toUpperCase()}</h1>
-			<div className="preview">
-				{items
-					.filter((item, idc) => idc < 4)
-					.map((item) => (
-						<CollectionItem
-							key={item.id}
-							imageUrl={item.imageUrl}
-							price={item.price}
-							name={item.name}
-							id={item.id}
-						/>
-					))}
+		<div className="product-card-container">
+			<img src={imageUrl} alt={`${name}`} />
+			<div className="footer">
+				<span className="name">{name}</span>
+				<span className="price">${price}</span>
 			</div>
+			<CustomButton
+				className="custom-button inverted"
+				onClick={addProductToCart}
+			>
+				Add to card
+			</CustomButton>
 		</div>
 	);
 };
 
-export default CollationPreview;
+export default ProductCard;
